@@ -46,6 +46,7 @@ syn keyword ethBuiltinFunction create make
 syn keyword ethBuiltinFunction len
 syn keyword ethBuiltinFunction cat join chr ord
 syn keyword ethBuiltinFunction to_upper to_lower
+syn keyword ehtBuiltinFunction strstr strstr_opt
 syn keyword ethBuiltinFunction cmp casecmp
 syn keyword ethBuiltinFunction sub
 syn keyword ethBuiltinFunction chomp chop
