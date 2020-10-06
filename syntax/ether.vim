@@ -95,7 +95,7 @@ syn keyword ethBuiltinFunction read_line_of read_line_of_opt
 syn keyword ethBuiltinFunction read read_of
 syn keyword ethBuiltinFunction read_opt read_of_opt
 syn keyword ethBuiltinFunction read_file
-syn keyword ethBuiltinFunction tell seek
+syn keyword ethBuiltinFunction tell seek flush
 
 syn keyword ethBuiltinFunction printf eprintf fprintf format
 syn keyword ethBuiltinFunction apply
