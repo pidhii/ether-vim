@@ -152,10 +152,12 @@ syn match ethDelimiter /[,;()]/
 
 " open:
 "syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ end=/\<in\>/ contains=ethDelimiter,ethIdentifier
-syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModuleImport end=/[A-Z]\k*/ skipnl skipwhite contains=ethIdentifier
-syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ end=/\<in\>/ contains=ethUsingAs,ethIdentifier
-syn keyword ethUsingAs as contained
-hi link ethUsingAs ethKeyword
+syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModule end=/[A-Z]\k*/ skipnl skipwhite
+syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ matchgroup=ethModule end=/[A-Z]\k*/ skipnl skipwhite nextgroup=ethAs
+  "contains=ethIdentifier
+syn region ethAs matchgroup=ethKeyword start=/\<as\>/ matchgroup=ethModule end=/[A-Z]\k*/ containedin=NOWHERE
+"syn keyword ethUsingAs as contained
+"hi link ethUsingAs ethKeyword
 
 " module
 syn region ethModuleDef matchgroup=Keyword start=/\<module\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
