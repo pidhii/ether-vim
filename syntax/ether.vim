@@ -70,6 +70,7 @@ syn keyword ethBuiltinFunction remove insert
 syn keyword ethBuiltinFunction fold_left fold_right
 syn keyword ethBuiltinFunction fold_left2 fold_right2
 syn keyword ethBuiltinFunction reduce_left reduce_right
+syn keyword ethBuiltinFunction reduce_left' reduce_right'
 syn keyword ethBuiltinFunction rev_scan_left scan_left scan_right
 syn keyword ethBuiltinFunction sort merge
 syn keyword ethBuiltinFunction drop rev_take take
@@ -87,8 +88,7 @@ syn keyword ethBuiltinFunction min max minmax
 syn keyword ethBuiltinFunction open_in open_out open_append
 syn keyword ethBuiltinFunction open_pipe_in open_pipe_out
 syn keyword ethBuiltinFunction close
-syn keyword ethBuiltinFunction input
-syn keyword ethBuiltinFunction print print_to newline
+syn keyword ethBuiltinFunction input print
 syn keyword ethBuiltinFunction write_to write
 syn keyword ethBuiltinFunction read_line read_line_opt
 syn keyword ethBuiltinFunction read_line_of read_line_of_opt
