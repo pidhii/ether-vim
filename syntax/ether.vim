@@ -87,6 +87,7 @@ syn keyword ethBuiltinFunction min max minmax
 
 syn keyword ethBuiltinFunction open_in open_out open_append
 syn keyword ethBuiltinFunction open_pipe_in open_pipe_out
+syn keyword ethBuiltinFunction open_string_in
 syn keyword ethBuiltinFunction close
 syn keyword ethBuiltinFunction input print
 syn keyword ethBuiltinFunction write_to write
