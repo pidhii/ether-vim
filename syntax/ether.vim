@@ -102,7 +102,7 @@ syn keyword ethBuiltinFunction printf eprintf fprintf format
 syn keyword ethBuiltinFunction apply
 syn keyword ethBuiltinFunction die raise exit
 syn keyword ethBuiltinFunction system shell
-syn keyword ethBuiltinFunction load create_env
+syn keyword ethBuiltinFunction load load_stream load_string create_env
 
 syn keyword ethBuiltinFunction failure invalid_argument type_error
 
