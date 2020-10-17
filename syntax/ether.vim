@@ -94,6 +94,12 @@ syn keyword ethBuiltinFunction write_to write
 syn keyword ethBuiltinFunction read_line read_line_opt
 syn keyword ethBuiltinFunction read_line_of read_line_of_opt
 syn keyword ethBuiltinFunction read read_of
+syn keyword ethBuiltinFunction read_i8_of read_i16_of read_i32_of read_i64_of
+syn keyword ethBuiltinFunction read_u8_of read_u16_of read_u32_of read_u64_of
+syn keyword ethBuiltinFunction read_f32_of read_f64_of
+syn keyword ethBuiltinFunction write_i8_to write_i16_to write_i32_to write_i64_to
+syn keyword ethBuiltinFunction write_u8_to write_u16_to write_u32_to write_u64_to
+syn keyword ethBuiltinFunction write_f32_to write_f64_to
 syn keyword ethBuiltinFunction read_opt read_of_opt
 syn keyword ethBuiltinFunction read_file
 syn keyword ethBuiltinFunction tell seek flush
