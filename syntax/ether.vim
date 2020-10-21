@@ -89,7 +89,7 @@ syn keyword ethBuiltinFunction open_in open_out open_append
 syn keyword ethBuiltinFunction open_pipe_in open_pipe_out
 syn keyword ethBuiltinFunction open_string_in
 syn keyword ethBuiltinFunction close
-syn keyword ethBuiltinFunction input print
+syn keyword ethBuiltinFunction input print eprint
 syn keyword ethBuiltinFunction write_to write
 syn keyword ethBuiltinFunction read_line read_line_opt
 syn keyword ethBuiltinFunction read_line_of read_line_of_opt
@@ -229,11 +229,18 @@ syn match Number /[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\?\%([eE][-+]\?[0-9][0-9_]*\)\?
 syn match Number /0[xX][0-9a-fA-F][0-9a-fA-F_]*/
 
 " String
-syn region String start=/"/ skip=/\\"/ end=/"/ skipnl skipwhite contains=ethFormat
-syn region String start=/{\z(\S\{-1,}\)|/ end=/|\z1}/ skipnl skipwhite keepend contains=ethFormat,ethQuote
-syn match ethQuote /{\S\{-1,}|/hs=s+1,he=e-1 contained
-syn match ethQuote /|\S\{-1,}}/hs=s+1,he=e-1 contained
+syn region ethString start=/"/ skip=/\\"/ end=/"/ skipnl skipwhite contains=ethFormat
+syn region ethString start=/'/ skip=/\\'/ end=/'/ skipnl skipwhite
+syn region ethString matchgroup=ethQuote start=/{\z(\S\{-1,}\)|/ end=/|\z1}/ skipnl skipwhite keepend contains=ethFormat
+"syn match ethQuote /{\S\{-1,}|/hs=s+1,he=e-1 contained containedin=ethStringQuote
+"syn match ethQuote /|\S\{-1,}}/hs=s+1,he=e-1 contained containedin=ethStringQuote
+"hi link ethStringQuote String
+hi link ethString String
 hi link ethQuote String
+
+"syn region ethFormat matchgroup=opiSpecial start=/%{/ end=/}/ contained contains=TOP
+
+
 " Help
 syn region ethHelp start=/{\.help|/ end=/|\.help}/ skipnl skipwhite contains=ethHelpAux keepend
 syn match ethHelpAux /{\.help|/hs=s+1,he=e-1 contained
@@ -245,47 +252,14 @@ hi link ethHelpAux Underlined
 syn region String matchgroup=ethRegexp start=+\\+ skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite
 hi link ethRegexp Type
 
-"" Shell
-"syn region String matchgroup=ethOperator start=/`/ skip=/\\`/ end=/\`/ skipnl skipwhite contains=ethFormat
-
-""RerEx
-"" qq[...]
-"syn region String matchgroup=ethQq start=/\<qr\[/ skip=/\\]/ end=/\]/ skipnl skipwhite contains=ethFormat
-"" qr(...)
-"syn region String matchgroup=ethQq start=/\<qr(/ skip=/\\)/ end=/)[a-zA-Z]*/ skipnl skipwhite contains=ethFormat
-"" qr{...}
-"syn region String matchgroup=ethQq start=/\<qr{/ skip=/\\}/ end=/}[a-zA-Z]*/ skipnl skipwhite contains=ethFormat
-"" qr/.../
-"syn region String matchgroup=ethQq start=+\<qr/+ skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite contains=ethFormat
-"" qr|...|
-"syn region String matchgroup=ethQq start=+\<qr|+ skip=+\\|+ end=+|[a-zA-Z]*+ skipnl skipwhite contains=ethFormat
-"" qr+...+
-"syn region String matchgroup=ethQq start=/\<qr+/ skip=/\\+/ end=/+[a-zA-Z]*/ skipnl skipwhite contains=ethFormat
-
-""Search Replace
-"" /../../
-"syn region String matchgroup=ethQq start="\<s[g]*/" skip=+\\/+ end=+/+ nextgroup=ethSrPattern1,ethSrPattern1End skipnl skipwhite contains=ethFormat
-"syn region ethSrPattern1 start=+.+ matchgroup=ethQq skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite contains=ethFormat contained
-"syn match ethSrPattern1End +/[a-zA-Z]*+ contained
-"hi link ethSrPattern1End ethQq
-"" |..|..|
-"syn region String matchgroup=ethQq start="\<s[g]*|" skip=+\\|+ end=+|+ nextgroup=ethSrPattern2,ethSrPattern2End skipnl skipwhite contains=ethFormat
-"syn region ethSrPattern2 start=+.+ matchgroup=ethQq skip=+\\|+ end=+|[a-zA-Z]*+ skipnl skipwhite contains=ethFormat contained
-"syn match ethSrPattern2End +|[a-zA-Z]*+ contained
-"hi link ethSrPattern2End ethQq
-"" +..+..+
-"syn region String matchgroup=ethQq start="\<s[g]*+" skip=/\\+/ end=/+/ nextgroup=ethSrPattern3,ethSrPattern3End skipnl skipwhite contains=ethFormat
-"syn region ethSrPattern3 start=+.+ matchgroup=ethQq skip=/\\+/ end=/+[a-zA-Z]*/ skipnl skipwhite contains=ethFormat contained
-"syn match ethSrPattern3End /+[a-zA-Z]*/ contained
-"hi link ethSrPattern3End ethQq
-
-syn match  SpecialChar /\\\d\+/ containedin=ethSrPattern1,ethSrPattern2,ethSrPattern3 contained
-hi link ethSrPattern1 String
-hi link ethSrPattern2 String
-hi link ethSrPattern3 String
-
 " Inline expression
-syn region ethFormat matchgroup=ethSpecial start=/%{/ end=/}/ contained contains=TOP
+syn region ethFormat matchgroup=ethSpecial start=/{/ end=/}/ contained contains=TOP
+syn match SpecialChar /\\{/ containedin=ethString
+
+"syn match  SpecialChar /\\\d\+/ containedin=ethSrPattern1,ethSrPattern2,ethSrPattern3 contained
+"hi link ethSrPattern1 String
+"hi link ethSrPattern2 String
+"hi link ethSrPattern3 String
 
 " Special characters
 syn match ethSpecial /\\$/ containedin=String contained
