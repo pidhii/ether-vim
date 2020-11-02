@@ -137,6 +137,8 @@ syn keyword ethBuiltinFunction failure invalid_argument type_error
 " Miscelenious:
 syn keyword Special command_line
 
+syn keyword PreCondit defined
+
 "syn region ethOf matchgroup=StorageClass start=/\<of\>/ matchgroup=ethType end=/\k\+\>/ skipwhite skipnl contains=ethSymbol,ethIdentifier
 
 syn match ethModule /\<[A-Z][a-zA-Z0-9_]*\s*\./he=e-1 nextgroup=ethModule,ethMember
@@ -193,9 +195,6 @@ syn keyword ethAssert assert
 
 syn keyword ethLazy lazy
 
-syn match Keyword /!/
-syn match ethUnit /(\s*)/
-
 syn keyword ethNil nil
 syn keyword ethBoolean true false
 syn keyword ethConstant stdin stdout stderr
@@ -211,6 +210,12 @@ syn match ethOperator /:\|\$/
 syn keyword ethOperator eq not mod land lor lxor lshl lshr ashl ashr lnot
 syn match ethOperator /\<is\>/
 syn match ethOperator /\<is\s\+of\>/
+
+syn match ethUnit /(\s*)/
+"hi link ethUnit PreProc
+hi link ethUnit Constant
+"hi link ethUnit Keyword
+syn match Keyword /!/
 
 syn region ethShebangComment start=/^#!/ end=/$/ contains=ethCommentLabel
 syn region ethComment start=/--/ end=/$/ contains=ethCommentLabel
@@ -255,6 +260,8 @@ hi link ethRegexp Type
 " Inline expression
 syn region ethFormat matchgroup=ethSpecial start=/{/ end=/}/ contained contains=TOP
 syn match SpecialChar /\\{/ containedin=ethString
+
+syn keyword Identifier _
 
 "syn match  SpecialChar /\\\d\+/ containedin=ethSrPattern1,ethSrPattern2,ethSrPattern3 contained
 "hi link ethSrPattern1 String
@@ -301,8 +308,6 @@ hi link ethType Type
 hi link ethDef Type
 hi link ethLambda Operator
 hi link ethOperator Operator
-"hi link ethUnit PreProc
-hi link ethUnit Constant
 hi link ethDelimiter Delimiter
 hi link ethConditional Conditional
 hi link ethNil Constant
