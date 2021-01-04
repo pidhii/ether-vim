@@ -35,7 +35,7 @@ syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
 " Builtins:
-syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp?
+syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp? vector?
 
 syn keyword ethBuiltinFunction to_number to_symbol
 syn keyword ethBuiltinFunction list
@@ -49,7 +49,7 @@ syn keyword ethBuiltinFunction to_upper to_lower
 syn keyword ehtBuiltinFunction strstr strstr_opt
 syn keyword ethBuiltinFunction cmp casecmp
 syn keyword ethBuiltinFunction sub
-syn keyword ethBuiltinFunction chomp chop
+syn keyword ethBuiltinFunction chomp chop trim_left trim_right trim
 
 syn keyword ethBuiltinFunction match gsub rev_split split
 
@@ -157,7 +157,8 @@ syn region ethArray matchgroup=Type start=/\[\s*|/ end=/|\s*\]/ skipwhite skipnl
 syn keyword StorageClass pub
 syn keyword Special __builtin __deprecated
 
-syn match ethDelimiter /[,;()]/
+syn match ethDelimiter /[,;]/
+syn region ethRoundBraces matchgroup=ethDelimiter start=/(/ end=/)/ contains=TOP
 
 " open:
 "syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ end=/\<in\>/ contains=ethDelimiter,ethIdentifier
@@ -216,6 +217,8 @@ syn match ethUnit /(\s*)/
 hi link ethUnit Constant
 "hi link ethUnit Keyword
 syn match Keyword /!/
+
+syn region ethEvalMacros matchgroup=Macro start=/@\s*(/ end=/)/ contains=TOP
 
 syn region ethShebangComment start=/^#!/ end=/$/ contains=ethCommentLabel
 syn region ethComment start=/--/ end=/$/ contains=ethCommentLabel
