@@ -38,7 +38,7 @@ syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
 syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp? vector?
 
 syn keyword ethBuiltinFunction to_number to_symbol
-syn keyword ethBuiltinFunction list
+syn keyword ethBuiltinFunction list index
 
 syn keyword ethBuiltinFunction dump
 
