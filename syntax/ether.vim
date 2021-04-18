@@ -38,17 +38,18 @@ syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
 syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp? vector?
 
 syn keyword ethBuiltinFunction to_number to_symbol
-syn keyword ethBuiltinFunction list index
+syn keyword ethBuiltinFunction list
 
 syn keyword ethBuiltinFunction dump
 
-syn keyword ethBuiltinFunction create make
+syn keyword ethBuiltinFunction malloc calloc make
 syn keyword ethBuiltinFunction len
 syn keyword ethBuiltinFunction cat join chr ord
 syn keyword ethBuiltinFunction to_upper to_lower
-syn keyword ehtBuiltinFunction strstr strstr_opt
-syn keyword ethBuiltinFunction cmp casecmp
+syn keyword ethBuiltinFunction strstr strstr_opt
+syn keyword ethBuiltinFunction strcmp strcasecmp
 syn keyword ethBuiltinFunction sub
+syn keyword ethBuiltinFunction malloc calloc
 syn keyword ethBuiltinFunction chomp chop trim_left trim_right trim
 
 syn keyword ethBuiltinFunction match gsub rev_split split
@@ -65,7 +66,8 @@ syn keyword ethBuiltinFunction rev_mapi mapi
 syn keyword ethBuiltinFunction iter iteri
 syn keyword ethBuiltinFunction rev_filter_map filter_map
 syn keyword ethBuiltinFunction rev_flat_map flat_map flatten
-syn keyword ethBuiltinFunction rev_filter filter find find_opt partition
+syn keyword ethBuiltinFunction rev_filter filter find find_opt index index_opt
+syn keyword ethBuiltinFunction partition
 syn keyword ethBuiltinFunction remove insert
 syn keyword ethBuiltinFunction fold_left fold_right
 syn keyword ethBuiltinFunction fold_left2 fold_right2
@@ -108,7 +110,7 @@ syn keyword ethBuiltinFunction printf eprintf fprintf format
 syn keyword ethBuiltinFunction apply
 syn keyword ethBuiltinFunction die raise exit
 syn keyword ethBuiltinFunction system shell
-syn keyword ethBuiltinFunction load load_stream load_string create_env
+syn keyword ethBuiltinFunction load load_stream load_string create_env require
 
 syn keyword ethBuiltinFunction failure invalid_argument type_error
 
@@ -162,8 +164,10 @@ syn region ethRoundBraces matchgroup=ethDelimiter start=/(/ end=/)/ contains=TOP
 
 " open:
 "syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ end=/\<in\>/ contains=ethDelimiter,ethIdentifier
-syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModule end=/[A-Z]\k*/ skipnl skipwhite
-syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ matchgroup=ethModule end=/[A-Z]\k*/ skipnl skipwhite nextgroup=ethAs
+syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite contains=ethModuleName
+syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite nextgroup=ethAs contains=ethModuleName
+syn match ethModuleName /[A-Z]\k*/ contained
+hi link ethModuleName ethModule
   "contains=ethIdentifier
 syn region ethAs matchgroup=ethKeyword start=/\<as\>/ matchgroup=ethModule end=/[A-Z]\k*/ containedin=NOWHERE
 "syn keyword ethUsingAs as contained
@@ -179,9 +183,6 @@ syn region ethTryWith matchgroup=ethException start=/\<try\>/ end=/\<with\>/ con
 "syn region ethMatch matchgroup=ethConditional start=/\<case\>/ end=/\<of\>/ contains=TOP skipwhite skipnl
 syn match ethConditional /\<then\>/
 syn match ethConditional /\<else\>/
-syn region ethBegin matchgroup=ethConditional start=/\<then\s\+begin\>/ end=/\<end\>/ contains=TOP skipwhite skipnl
-syn region ethBegin matchgroup=ethConditional start=/\<else\s\+begin\>/ end=/\<end\>/ contains=TOP skipwhite skipnl
-syn region ethBegin matchgroup=ethKeyword start=/\<begin\>/ end=/\<end\>/ contains=TOP skipwhite skipnl
 syn region ethObject matchgroup=ethKeyword start=/\<object\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
 syn keyword ethMethod method contained containedin=ethObject
 hi link ethMethod Keyword
@@ -189,12 +190,13 @@ syn keyword ethInherit inherit contained containedin=ethObject
 hi link ethInherit Keyword
 syn keyword ethVal val contained containedin=ethObject
 hi link ethVal Keyword
-syn region ethDo matchgroup=ethKeyword start=/\<do\>/ end=/\<done\>/ contains=TOP skipwhite skipnl
-syn keyword ethKeyword rec and or in as with
+syn keyword ethKeyword rec and or in as
 syn keyword ethConditional unless otherwize
 syn keyword ethAssert assert
 
 syn keyword ethLazy lazy
+
+syn keyword Repeat do
 
 syn keyword ethNil nil
 syn keyword ethBoolean true false
@@ -254,7 +256,7 @@ syn region ethHelp start=/{\.help|/ end=/|\.help}/ skipnl skipwhite contains=eth
 syn match ethHelpAux /{\.help|/hs=s+1,he=e-1 contained
 syn match ethHelpAux /|\.help}/hs=s+1,he=e-1 contained
 "hi link ethHelpDelim SpecialComment
-"hi link ethHelp Comment
+hi link ethHelp SpecialComment
 hi link ethHelpAux Underlined
 " Regexp
 syn region String matchgroup=ethRegexp start=+\\+ skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite
