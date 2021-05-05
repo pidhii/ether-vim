@@ -156,7 +156,7 @@ syn region ethTable matchgroup=Type start=/{/ end=/}/ contains=TOP skipwhite ski
 syn region ethList matchgroup=Type start=/\[/ end=/\]/ skipwhite skipnl contains=TOP
 syn region ethArray matchgroup=Type start=/\[\s*|/ end=/|\s*\]/ skipwhite skipnl contains=TOP
 
-syn keyword StorageClass pub
+syn keyword StorageClass pub mut
 syn keyword Special __builtin __deprecated
 
 syn match ethDelimiter /[,;]/
@@ -190,7 +190,7 @@ syn keyword ethInherit inherit contained containedin=ethObject
 hi link ethInherit Keyword
 syn keyword ethVal val contained containedin=ethObject
 hi link ethVal Keyword
-syn keyword ethKeyword rec and or in as
+syn keyword ethKeyword rec and or in as with
 syn keyword ethConditional unless otherwize
 syn keyword ethAssert assert
 
