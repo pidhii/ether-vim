@@ -10,9 +10,10 @@ set comments=:--,sr:(*,mb:*,ex:*)
 
 set iskeyword+=?,'
 
-syn match ethIdentifier /\<[a-z_][a-zA-Z0-9_]*[\'?]\?\>/
+syn match ethIdentifier /\<[a-zA-Z_][a-zA-Z0-9_]*[\'?]\?\>/
 
-syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
+"syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
+syn match ethSymbol     /`[a-zA-Z0-9_]*\>/
 
 "syn region ethModuleDef matchgroup=ethModule start=/\<module\>/ end=/\<end\>/ contains=TOP
 
@@ -38,7 +39,7 @@ syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
 syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp? vector?
 
 syn keyword ethBuiltinFunction to_number to_symbol
-syn keyword ethBuiltinFunction list
+syn keyword ethBuiltinFunction list record
 
 syn keyword ethBuiltinFunction dump
 
@@ -91,7 +92,17 @@ syn keyword ethBuiltinFunction open_in open_out open_append
 syn keyword ethBuiltinFunction open_pipe_in open_pipe_out
 syn keyword ethBuiltinFunction open_string_in
 syn keyword ethBuiltinFunction close
-syn keyword ethBuiltinFunction input print eprint
+syn keyword ethBuiltinFunction input print print_to eprint
+
+syn keyword ethBuiltinFunction die raise exit
+syn keyword ethBuiltinFunction system
+syn keyword ethBuiltinFunction rand srand
+syn keyword ethBuiltinFunction load load_stream load_string create_env require
+syn keyword ethBuiltinFunction failure invalid_argument type_error
+
+" IO library
+syn keyword ethBuiltinFunction printf eprintf fprintf format
+syn keyword ethBuiltinFunction shell
 syn keyword ethBuiltinFunction write_to write
 syn keyword ethBuiltinFunction read_line read_line_opt
 syn keyword ethBuiltinFunction read_line_of read_line_of_opt
@@ -105,14 +116,6 @@ syn keyword ethBuiltinFunction write_f32_to write_f64_to
 syn keyword ethBuiltinFunction read_opt read_of_opt
 syn keyword ethBuiltinFunction read_file
 syn keyword ethBuiltinFunction tell seek flush
-
-syn keyword ethBuiltinFunction printf eprintf fprintf format
-syn keyword ethBuiltinFunction apply
-syn keyword ethBuiltinFunction die raise exit
-syn keyword ethBuiltinFunction system shell
-syn keyword ethBuiltinFunction load load_stream load_string create_env require
-
-syn keyword ethBuiltinFunction failure invalid_argument type_error
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Base:
@@ -143,8 +146,8 @@ syn keyword PreCondit defined
 
 "syn region ethOf matchgroup=StorageClass start=/\<of\>/ matchgroup=ethType end=/\k\+\>/ skipwhite skipnl contains=ethSymbol,ethIdentifier
 
-syn match ethModule /\<[A-Z][a-zA-Z0-9_]*\s*\./he=e-1 nextgroup=ethModule,ethMember
-syn match ethMember /\<[a-z_][a-zA-Z0-9_]*['?]?\>/
+"syn match ethModule /\<[A-Z][a-zA-Z0-9_]*\s*\./he=e-1 nextgroup=ethModule,ethMember
+"syn match ethMember /\<[a-z_][a-zA-Z0-9_]*['?]?\>/
 
 syn match Special /\<_\>/
 
@@ -163,18 +166,16 @@ syn match ethDelimiter /[,;]/
 syn region ethRoundBraces matchgroup=ethDelimiter start=/(/ end=/)/ contains=TOP
 
 " open:
+syn keyword ethKeyword open import
 "syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ end=/\<in\>/ contains=ethDelimiter,ethIdentifier
-syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite contains=ethModuleName
-syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite nextgroup=ethAs contains=ethModuleName
-syn match ethModuleName /[A-Z]\k*/ contained
-hi link ethModuleName ethModule
+"syn region ethOpen matchgroup=ethKeyword start=/\<open\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite contains=ethModuleName
+"syn region ethUsing matchgroup=ethKeyword start=/\<using\>/ matchgroup=ethModule skip=/[A-Z]\k*\./ end=/[A-Z]\k*/ skipnl skipwhite nextgroup=ethAs contains=ethModuleName
+"syn match ethModuleName /[A-Z]\k*/ contained
+"hi link ethModuleName ethModule
   "contains=ethIdentifier
-syn region ethAs matchgroup=ethKeyword start=/\<as\>/ matchgroup=ethModule end=/[A-Z]\k*/ containedin=NOWHERE
+"syn region ethAs matchgroup=ethKeyword start=/\<as\>/ matchgroup=ethModule end=/[A-Z]\k*/ containedin=NOWHERE
 "syn keyword ethUsingAs as contained
 "hi link ethUsingAs ethKeyword
-
-" module
-syn region ethModuleDef matchgroup=Keyword start=/\<module\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
 
 syn match ethKeyword /\<let\>/
 syn match ethConditional /\<if\%(\s\+let\)\?\>/
@@ -183,12 +184,17 @@ syn region ethTryWith matchgroup=ethException start=/\<try\>/ end=/\<with\>/ con
 "syn region ethMatch matchgroup=ethConditional start=/\<case\>/ end=/\<of\>/ contains=TOP skipwhite skipnl
 syn match ethConditional /\<then\>/
 syn match ethConditional /\<else\>/
-syn region ethObject matchgroup=ethKeyword start=/\<object\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
-syn keyword ethMethod method contained containedin=ethObject
-hi link ethMethod Keyword
-syn keyword ethInherit inherit contained containedin=ethObject
-hi link ethInherit Keyword
-syn keyword ethVal val contained containedin=ethObject
+
+syn keyword Keyword class object method inherit
+syn keyword Special self
+syn keyword Statement new
+"syn region ethObject matchgroup=ethKeyword start=/\<object\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
+"syn keyword ethMethod method contained containedin=ethObject
+"hi link ethMethod Keyword
+"syn keyword ethInherit inherit contained containedin=ethObject
+"hi link ethInherit Keyword
+"syn keyword ethVal val contained containedin=ethObject
+
 hi link ethVal Keyword
 syn keyword ethKeyword rec and or in as with
 syn keyword ethConditional unless otherwize
