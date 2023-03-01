@@ -43,13 +43,13 @@ syn keyword ethBuiltinFunction list record
 
 syn keyword ethBuiltinFunction dump
 
-syn keyword ethBuiltinFunction malloc calloc make
-syn keyword ethBuiltinFunction len
+syn keyword ethBuiltinFunction malloc calloc make_string
+syn keyword ethBuiltinFunction len strlen
 syn keyword ethBuiltinFunction cat join chr ord
 syn keyword ethBuiltinFunction to_upper to_lower
 syn keyword ethBuiltinFunction strstr strstr_opt
 syn keyword ethBuiltinFunction strcmp strcasecmp
-syn keyword ethBuiltinFunction sub
+syn keyword ethBuiltinFunction substr
 syn keyword ethBuiltinFunction malloc calloc
 syn keyword ethBuiltinFunction chomp chop trim_left trim_right trim
 
@@ -185,9 +185,7 @@ syn region ethTryWith matchgroup=ethException start=/\<try\>/ end=/\<with\>/ con
 syn match ethConditional /\<then\>/
 syn match ethConditional /\<else\>/
 
-syn keyword Keyword class object method inherit
 syn keyword Special self
-syn keyword Statement new
 "syn region ethObject matchgroup=ethKeyword start=/\<object\>/ end=/\<end\>/ contains=TOP skipnl skipwhite
 "syn keyword ethMethod method contained containedin=ethObject
 "hi link ethMethod Keyword
@@ -199,6 +197,7 @@ hi link ethVal Keyword
 syn keyword ethKeyword rec and or in as with
 syn keyword ethConditional unless otherwize
 syn keyword ethAssert assert
+syn keyword ethReturn return
 
 syn keyword ethLazy lazy
 
@@ -313,6 +312,7 @@ hi link ethConditional Conditional
 hi link ethException Exception
 
 hi link ethAssert Keyword
+hi link ethReturn Keyword
 hi link ethLazy Keyword
 
 hi link ethType Type
