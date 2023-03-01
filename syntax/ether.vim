@@ -229,12 +229,9 @@ syn region ethEvalMacros matchgroup=Macro start=/@\s*(/ end=/)/ contains=TOP
 
 syn region ethShebangComment start=/^#!/ end=/$/ contains=ethCommentLabel
 syn region ethComment start=/--/ end=/$/ contains=ethCommentLabel
-syn region ethMultiComment start=/--\[\[/ end=/\]\]/ contains=ethMultiComment skipwhite skipnl
-"syn region luaInnerComment   contained transparent start="\[\[" end="\]\]"
 syn match ethCommentLabel /[A-Z]\w*:/ contained
 hi link ethShebangComment Comment
 hi link ethComment Comment
-hi link ethMultiComment Comment
 
 " Integer
 "syn match Number '\<\d\+'
