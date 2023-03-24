@@ -10,6 +10,7 @@ set comments=:--,sr:(*,mb:*,ex:*)
 
 set iskeyword+=?,'
 
+syn keyword Statement begin end
 syn match ethIdentifier /\<[a-zA-Z_][a-zA-Z0-9_]*[\'?]\?\>/
 
 "syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
@@ -39,7 +40,7 @@ syn match ethSymbol     /`[a-zA-Z0-9_]*\>/
 syn keyword ethBuiltinFunction pair? symbol? number? string? boolean? function? tuple? record? file? regexp? vector?
 
 syn keyword ethBuiltinFunction to_number to_symbol
-syn keyword ethBuiltinFunction list record
+syn keyword ethBuiltinFunction list record object
 
 syn keyword ethBuiltinFunction dump
 
@@ -213,7 +214,8 @@ syn match ethLambda /->/
 "syn match ethTableRef /::/ nextgroup=ethKey
 "syn match ethKey /\k\+/ contained
 
-syn match ethOperator /[-+=*/%><&|.!^~∘]\+/
+syn match Keyword /![^=]/
+syn match ethOperator /[-+=*/%><&|.!^~∘#]\+/
 syn match ethOperator /:\|\$/
 syn keyword ethOperator eq not mod land lor lxor lshl lshr ashl ashr lnot
 syn match ethOperator /\<is\>/
@@ -223,7 +225,6 @@ syn match ethUnit /(\s*)/
 "hi link ethUnit PreProc
 hi link ethUnit Constant
 "hi link ethUnit Keyword
-syn match Keyword /!/
 
 syn region ethEvalMacros matchgroup=Macro start=/@\s*(/ end=/)/ contains=TOP
 
@@ -261,8 +262,8 @@ syn match ethHelpAux /|\.help}/hs=s+1,he=e-1 contained
 hi link ethHelp SpecialComment
 hi link ethHelpAux Underlined
 " Regexp
-syn region String matchgroup=ethRegexp start=+\\+ skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite
-hi link ethRegexp Type
+syn region String matchgroup=ethRegexp start=-[[:space:]]\+/[^[:space:]]-hs=s+1,rs=e-1 skip=+\\/+ end=+/[a-zA-Z]*+ skipnl skipwhite
+"hi link ethRegexp Type
 
 " Inline expression
 syn region ethFormat matchgroup=ethSpecial start=/{/ end=/}/ contained contains=TOP
