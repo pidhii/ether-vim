@@ -11,7 +11,10 @@ set comments=:--,sr:(*,mb:*,ex:*)
 set iskeyword+=?,'
 
 syn keyword Statement begin end
-syn match ethIdentifier /\<[a-zA-Z_][a-zA-Z0-9_]*[\'?]\?\>/
+syn match ethIdentifier /[a-zA-Z_][a-zA-Z0-9_]*[\'?]\?/
+syn match ethFunction /[a-zA-Z_][a-zA-Z0-9_]*[\'?]\?(/me=e-1
+hi link ethFunction Function
+hi link ethIdentifier Normal
 
 "syn match ethSymbol     /\<[A-Z][a-zA-Z0-9_]*\>/
 syn match ethSymbol     /`[a-zA-Z0-9_]*\>/
@@ -156,7 +159,7 @@ syn keyword ethType fn
 
 syn region ethBraces matchgroup=Delimiter start=/(/ end=/)/ contains=TOP skipwhite skipnl
 
-syn region ethTable matchgroup=Type start=/{/ end=/}/ contains=TOP skipwhite skipnl
+syn region ethBlock matchgroup=Delimiter start=/{/ end=/}/ contains=TOP skipwhite skipnl
 syn region ethList matchgroup=Type start=/\[/ end=/\]/ skipwhite skipnl contains=TOP
 syn region ethArray matchgroup=Type start=/\[\s*|/ end=/|\s*\]/ skipwhite skipnl contains=TOP
 
@@ -221,11 +224,10 @@ syn keyword ethOperator eq not mod land lor lxor lshl lshr ashl ashr lnot
 syn match ethOperator /\<is\>/
 syn match ethOperator /\<is\s\+of\>/
 
-syn match ethUnit /(\s*)/
-"hi link ethUnit PreProc
-hi link ethUnit Constant
-"hi link ethUnit Keyword
-
+syn region ethTable matchgroup=Type start=/#{/ end=/}/ contains=TOP skipwhite skipnl
+syn region ethTable matchgroup=Type start=/[[:alpha:]][[:alnum:]]*#{/ end=/}/ contains=TOP skipwhite skipnl
+syn region ethTuple matchgroup=Type start=/#(/ end=/)/ contains=TOP skipwhite skipnl
+syn region ethTuple matchgroup=Type start=/[[:alpha:]][[:alnum:]]*#(/ end=/)/ contains=TOP skipwhite skipnl
 syn region ethEvalMacros matchgroup=Macro start=/@\s*(/ end=/)/ contains=TOP
 
 syn region ethShebangComment start=/^#!/ end=/$/ contains=ethCommentLabel
